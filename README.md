@@ -48,3 +48,5 @@
 感謝所有提供資料的工程師，以及感謝整理表單的 [@southeasteast](https://www.dcard.tw/@southeasteast)
 
 如果此作品對你有幫助，請考慮給我一顆星星！您的支持將激勵我更加努力 ：）
+
+[MIT](./LICENSE)
