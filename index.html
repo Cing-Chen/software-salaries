@@ -14,7 +14,10 @@
       property="og:image"
       content="https://zhong1016.github.io/software-salaries/images/money.jpg"
     />
-    <link rel="icon" href="./images/favicon.ico" />
+    <link
+      rel="icon"
+      href="https://zhong1016.github.io/software-salaries/images/favicon.ico"
+    />
     <title>Software Salaries</title>
     <style>
       * {
@@ -43,9 +46,9 @@
   </head>
   <body>
     <div id="app">
-      <div class="h-40 lg:h-16 flex flex-wrap">
+      <div class="h-60 lg:h-16 flex flex-wrap">
         <div
-          class="pt-2 w-full flex justify-center items-center lg:p-0 lg:w-1/4"
+          class="pt-2 w-full flex justify-center items-center lg:p-0 lg:w-1/5"
         >
           <a
             href="https://zhong1016.github.io/software-salaries/"
@@ -65,13 +68,13 @@
           </a>
         </div>
         <div
-          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/4 lg:justify-start"
+          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
         >
           <el-select
             class="w-full lg:w-5/6"
             v-model="companyValue"
-            placeholder="select company"
             @change="companyChange"
+            placeholder="select company"
             filterable
             clearable
           >
@@ -84,13 +87,13 @@
           </el-select>
         </div>
         <div
-          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/4 lg:justify-start"
+          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
         >
           <el-select
             class="w-full lg:w-5/6"
             v-model="salaryValue"
-            placeholder="select monthly salary"
             @change="salaryChange"
+            placeholder="select monthly salary"
             filterable
             clearable
           >
@@ -102,7 +105,26 @@
             />
           </el-select>
         </div>
-        <div class="w-1/4 justify-center items-center hidden lg:flex">
+        <div
+          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
+        >
+          <el-select
+            class="w-full lg:w-5/6"
+            v-model="annualValue"
+            @change="annualChange"
+            placeholder="select annual salary"
+            filterable
+            clearable
+          >
+            <el-option
+              v-for="item in annualOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
+        <div class="w-1/5 justify-center items-center hidden lg:flex">
           <a
             href="https://github.com/zhong1016/software-salaries"
             target="_blank"
@@ -115,6 +137,7 @@
           </a>
         </div>
       </div>
+
       <div class="h-[calc(100%-4rem)] hidden lg:block">
         <el-table
           v-loading="loading"
@@ -176,6 +199,7 @@
             prop="totalAnnualCompensation"
             label="總共年薪(萬)"
             width="140"
+            sortable
           ></el-table-column>
           <el-table-column
             align="center"
@@ -221,7 +245,7 @@
         </el-table>
       </div>
 
-      <div class="h-[calc(100%-10rem)] block lg:hidden">
+      <div class="h-[calc(100%-15rem)] block lg:hidden">
         <el-table
           v-loading="loading"
           :data="employee"

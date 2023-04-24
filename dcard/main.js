@@ -30,7 +30,10 @@ dcard.forEach((tr, index) => {
     employee[key] =
       key === 'supplement' ? text.replace(/^[\n\s]+|[\n\s]+$/g, '') : text;
 
-    employee[key] = !!+employee[key] ? +employee[key] : employee[key];
+    employee[key] =
+      !!+employee[key] || employee[key] === '0'
+        ? +employee[key]
+        : employee[key];
   });
   employeeList.push(JSON.parse(JSON.stringify(employee)));
 });

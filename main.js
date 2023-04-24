@@ -19,6 +19,29 @@ const salaryOptions = [
   },
 ];
 
+const annualOptions = [
+  {
+    value: 1,
+    label: '0 ~ 500000',
+  },
+  {
+    value: 2,
+    label: '500000 ~ 1000000',
+  },
+  {
+    value: 3,
+    label: '1000000 ~ 1500000',
+  },
+  {
+    value: 4,
+    label: '1500000 ~ 2000000',
+  },
+  {
+    value: 5,
+    label: '2000000 up',
+  },
+];
+
 const App = {
   setup() {
     const loading = ref(true);
@@ -27,44 +50,62 @@ const App = {
     const companyValue = ref('');
     const companyOptions = ref([]);
     const salaryValue = ref('');
+    const annualValue = ref('');
 
-    const filterEmployee = (employeeClone, company, salary) => {
-      let filteredEmployee = employeeClone;
-      if (company) {
-        filteredEmployee = filteredEmployee.filter(
-          (e) => e.companyName === company
-        );
-      }
-      if (salary) {
-        switch (salary) {
-          case 1:
-            filteredEmployee = filteredEmployee.filter(
-              (e) => e.monthlyBaseSalary < 5
-            );
-            break;
-          case 2:
-            filteredEmployee = filteredEmployee.filter(
-              (e) => e.monthlyBaseSalary >= 5 && e.monthlyBaseSalary < 10
-            );
-            break;
-          case 3:
-            filteredEmployee = filteredEmployee.filter(
-              (e) => e.monthlyBaseSalary >= 10
-            );
-            break;
-        }
-      }
-      return filteredEmployee;
+    const filterEmployee = (
+      employeeClone,
+      { company = null, salary = null, annual = null }
+    ) => {
+      const filters = {
+        company: (e) => e.companyName === company,
+        salary: {
+          1: (e) => e.monthlyBaseSalary < 5,
+          2: (e) => e.monthlyBaseSalary >= 5 && e.monthlyBaseSalary < 10,
+          3: (e) => e.monthlyBaseSalary >= 10,
+        },
+        annual: {
+          1: (e) => e.totalAnnualCompensation < 50,
+          2: (e) =>
+            e.totalAnnualCompensation >= 50 && e.totalAnnualCompensation < 100,
+          3: (e) =>
+            e.totalAnnualCompensation >= 100 && e.totalAnnualCompensation < 150,
+          4: (e) =>
+            e.totalAnnualCompensation >= 150 && e.totalAnnualCompensation < 200,
+          5: (e) => e.totalAnnualCompensation >= 200,
+        },
+      };
+
+      let filteredEmp = employeeClone;
+
+      if (company) filteredEmp = filteredEmp.filter(filters.company);
+      if (salary) filteredEmp = filteredEmp.filter(filters.salary[salary]);
+      if (annual) filteredEmp = filteredEmp.filter(filters.annual[annual]);
+
+      return filteredEmp;
     };
 
     const companyChange = (company) => {
       salaryValue.value = '';
-      employee.value = filterEmployee(employeeClone.value, company, null);
+      annualValue.value = '';
+      employee.value = filterEmployee(employeeClone.value, {
+        company,
+      });
     };
 
     const salaryChange = (salary) => {
       companyValue.value = '';
-      employee.value = filterEmployee(employeeClone.value, null, salary);
+      annualValue.value = '';
+      employee.value = filterEmployee(employeeClone.value, {
+        salary,
+      });
+    };
+
+    const annualChange = (annual) => {
+      companyValue.value = '';
+      salaryValue.value = '';
+      employee.value = filterEmployee(employeeClone.value, {
+        annual,
+      });
     };
 
     const init = async () => {
@@ -94,6 +135,9 @@ const App = {
       salaryValue,
       salaryOptions,
       salaryChange,
+      annualValue,
+      annualOptions,
+      annualChange,
       loading,
     };
   },
