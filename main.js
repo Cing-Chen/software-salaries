@@ -51,6 +51,7 @@ const App = {
     const companyOptions = ref([]);
     const salaryValue = ref('');
     const annualValue = ref('');
+    const tableRef = ref(null);
 
     const filterEmployee = (
       employeeClone,
@@ -85,6 +86,7 @@ const App = {
     };
 
     const companyChange = (company) => {
+      tableRef.value.setScrollTop(0);
       salaryValue.value = '';
       annualValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
@@ -93,6 +95,7 @@ const App = {
     };
 
     const salaryChange = (salary) => {
+      tableRef.value.setScrollTop(0);
       companyValue.value = '';
       annualValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
@@ -101,6 +104,7 @@ const App = {
     };
 
     const annualChange = (annual) => {
+      tableRef.value.setScrollTop(0);
       companyValue.value = '';
       salaryValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
@@ -139,6 +143,7 @@ const App = {
       annualOptions,
       annualChange,
       loading,
+      tableRef,
     };
   },
 };
