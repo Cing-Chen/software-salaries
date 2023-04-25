@@ -19,7 +19,7 @@
 
 ### API ✨
 
-- 使用 ./employee.json ，資料來源為 ./dcard/純軟薪水 Dcard 匿名表單.html
+- 使用 ./employee.json ，資料來源為 ./dcard/純軟薪水 Dcard 匿名表單.rar
 
 ### 目錄結構 ✨
 
