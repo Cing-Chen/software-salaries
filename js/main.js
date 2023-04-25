@@ -30,8 +30,8 @@ const App = {
     const loading = ref(true);
     const employee = ref([]);
     const employeeClone = ref([]);
-    const companyValue = ref('');
     const companyOptions = ref([]);
+    const companyValue = ref('');
     const salaryValue = ref('');
     const annualValue = ref('');
     const tableRef = ref(null);
@@ -40,9 +40,6 @@ const App = {
       employeeClone,
       { company = '', salary = '', annual = '' }
     ) => {
-      companyValue.value = '';
-      salaryValue.value = '';
-      annualValue.value = '';
       [companyValue.value, salaryValue.value, annualValue.value] = [
         company,
         salary,
