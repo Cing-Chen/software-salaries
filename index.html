@@ -327,6 +327,11 @@
         </el-table>
       </div>
     </div>
-    <script src="./main.js"></script>
+    <script type="module">
+      import App from './js/main.js';
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount('#app');
+    </script>
   </body>
 </html>

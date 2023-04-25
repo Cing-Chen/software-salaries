@@ -1,46 +1,29 @@
+import { salaryOptions, annualOptions } from './model.js';
+
 const { ref } = Vue;
 
-const getEmployee = () => {
+const getEmployee = async () => {
   return fetch('./employee.json').then((r) => r.json());
 };
 
-const salaryOptions = [
-  {
-    value: 1,
-    label: '0 ~ 49999',
+const filters = {
+  company: (e, company) => e.companyName === company,
+  salary: {
+    1: (e) => e.monthlyBaseSalary < 5,
+    2: (e) => e.monthlyBaseSalary >= 5 && e.monthlyBaseSalary < 10,
+    3: (e) => e.monthlyBaseSalary >= 10,
   },
-  {
-    value: 2,
-    label: '50000 ~ 99999',
+  annual: {
+    1: (e) => e.totalAnnualCompensation < 50,
+    2: (e) =>
+      e.totalAnnualCompensation >= 50 && e.totalAnnualCompensation < 100,
+    3: (e) =>
+      e.totalAnnualCompensation >= 100 && e.totalAnnualCompensation < 150,
+    4: (e) =>
+      e.totalAnnualCompensation >= 150 && e.totalAnnualCompensation < 200,
+    5: (e) => e.totalAnnualCompensation >= 200,
   },
-  {
-    value: 3,
-    label: '100000 up',
-  },
-];
-
-const annualOptions = [
-  {
-    value: 1,
-    label: '0 ~ 500000',
-  },
-  {
-    value: 2,
-    label: '500000 ~ 1000000',
-  },
-  {
-    value: 3,
-    label: '1000000 ~ 1500000',
-  },
-  {
-    value: 4,
-    label: '1500000 ~ 2000000',
-  },
-  {
-    value: 5,
-    label: '2000000 up',
-  },
-];
+};
 
 const App = {
   setup() {
@@ -55,58 +38,40 @@ const App = {
 
     const filterEmployee = (
       employeeClone,
-      { company = null, salary = null, annual = null }
+      { company = '', salary = '', annual = '' }
     ) => {
-      const filters = {
-        company: (e) => e.companyName === company,
-        salary: {
-          1: (e) => e.monthlyBaseSalary < 5,
-          2: (e) => e.monthlyBaseSalary >= 5 && e.monthlyBaseSalary < 10,
-          3: (e) => e.monthlyBaseSalary >= 10,
-        },
-        annual: {
-          1: (e) => e.totalAnnualCompensation < 50,
-          2: (e) =>
-            e.totalAnnualCompensation >= 50 && e.totalAnnualCompensation < 100,
-          3: (e) =>
-            e.totalAnnualCompensation >= 100 && e.totalAnnualCompensation < 150,
-          4: (e) =>
-            e.totalAnnualCompensation >= 150 && e.totalAnnualCompensation < 200,
-          5: (e) => e.totalAnnualCompensation >= 200,
-        },
-      };
+      companyValue.value = '';
+      salaryValue.value = '';
+      annualValue.value = '';
+      [companyValue.value, salaryValue.value, annualValue.value] = [
+        company,
+        salary,
+        annual,
+      ];
 
       let filteredEmp = employeeClone;
-
-      if (company) filteredEmp = filteredEmp.filter(filters.company);
+      if (company)
+        filteredEmp = filteredEmp.filter((e) => filters.company(e, company));
       if (salary) filteredEmp = filteredEmp.filter(filters.salary[salary]);
       if (annual) filteredEmp = filteredEmp.filter(filters.annual[annual]);
 
+      tableRef.value.setScrollTop(0);
       return filteredEmp;
     };
 
     const companyChange = (company) => {
-      tableRef.value.setScrollTop(0);
-      salaryValue.value = '';
-      annualValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
         company,
       });
     };
 
     const salaryChange = (salary) => {
-      tableRef.value.setScrollTop(0);
-      companyValue.value = '';
-      annualValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
         salary,
       });
     };
 
     const annualChange = (annual) => {
-      tableRef.value.setScrollTop(0);
-      companyValue.value = '';
-      salaryValue.value = '';
       employee.value = filterEmployee(employeeClone.value, {
         annual,
       });
@@ -148,6 +113,4 @@ const App = {
   },
 };
 
-const app = Vue.createApp(App);
-app.use(ElementPlus);
-app.mount('#app');
+export default App;
