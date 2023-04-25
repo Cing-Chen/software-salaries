@@ -3905,25 +3905,6 @@
     "loading": 4,
     "supplement": "新鮮人試用期六個月薪水打九折，試用期滿前要考到內稽內控證照，要背產險業績薪水如果是用談的，HR可能會用比較好的數字報給你，畢竟年終是一個區間，實拿才知道，新人一般來說都吃最差優點1.                  全盛時期的Buffet(30分鐘吃到飽，飲料隨便拿，甜點餅乾，冰淇淋是哈根達斯)2.                  新鮮人換算年薪在台中應該不會算差，保底春節1個月，年終3-6個月(考績分界是11月)3.                  沒事基本上不會加班如果滿足以下幾點大概會如魚得水混得風生水起畢竟是銀行，需要做很多文件，懂得向上管理，知進退，比較吃香懂得權責分明，事情是誰的就是誰的，不用自己沒事找事情做運氣點滿（遇到好mentor就靠這）閃避技能點滿自保技能點滿口條技能點滿接電話技能點滿不拘泥細節，不會太在意他人眼光"
   },
-
-  {
-    "timestamp": "2023/4/22 下午 1:27:35",
-    "companyName": "Yahoo",
-    "nothing": "",
-    "position": "Software Engineer",
-    "jobLevel": "IC2",
-    "relevantExperience": 4,
-    "currentTenure": 3,
-    "monthlyBaseSalary": 9,
-    "monthlyBonus": 1,
-    "totalAnnualCompensation": 150,
-    "dailyAverageWorkingHours": 7,
-    "monthlyOvertime": 3,
-    "overtimeFrequency": 1,
-    "jobSatisfaction": 4,
-    "loading": 3,
-    "supplement": "文化 內容不錯 但公司前景不明朗"
-  },
   {
     "timestamp": "2023/4/22 下午 4:56:22",
     "companyName": "Amazon",
@@ -3946,7 +3927,7 @@
     "timestamp": "2023/4/22 下午 7:24:38",
     "companyName": "Meta London",
     "nothing": "",
-    "position": "Software Engineer",
+    "position": "Engineer",
     "jobLevel": "E3",
     "relevantExperience": 0.5,
     "currentTenure": 0.5,
@@ -3964,7 +3945,7 @@
     "timestamp": "2023/4/22 下午 11:40:32",
     "companyName": "Yahoo",
     "nothing": "",
-    "position": "Sr. Software Engineer",
+    "position": "Sr. Engineer",
     "jobLevel": "IC3",
     "relevantExperience": 6,
     "currentTenure": 5,
