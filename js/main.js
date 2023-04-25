@@ -45,7 +45,8 @@ const App = {
     const companyValue = ref('');
     const salaryValue = ref('');
     const annualValue = ref('');
-    const tableRef = ref(null);
+    const tableRefPC = ref(null);
+    const tableRefMobile = ref(null);
 
     const filterEmployee = (
       employeeClone,
@@ -60,7 +61,8 @@ const App = {
 
       if (annual) filteredEmp = filteredEmp.filter(filters.annual[annual]);
 
-      tableRef.value.setScrollTop(0);
+      tableRefPC.value.setScrollTop(0);
+      tableRefMobile.value.setScrollTop(0);
       return filteredEmp;
     };
 
@@ -98,7 +100,8 @@ const App = {
       annualValue,
       annualOptions,
       loading,
-      tableRef,
+      tableRefPC,
+      tableRefMobile,
       onChange,
     };
   },
