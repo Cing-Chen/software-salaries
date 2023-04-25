@@ -6,6 +6,17 @@ const getEmployee = async () => {
   return fetch('./employee.json').then((r) => r.json());
 };
 
+const getCompany = (res) => {
+  let list = [];
+  new Set(res.map((e) => e.companyName)).forEach((e) =>
+    list.push({
+      value: e,
+      label: e,
+    })
+  );
+  return list;
+};
+
 const filters = {
   company: (e, company) => e.companyName === company,
   salary: {
@@ -40,36 +51,28 @@ const App = {
       employeeClone,
       { company = '', salary = '', annual = '' }
     ) => {
-      [companyValue.value, salaryValue.value, annualValue.value] = [
-        company,
-        salary,
-        annual,
-      ];
-
       let filteredEmp = employeeClone;
+
       if (company)
         filteredEmp = filteredEmp.filter((e) => filters.company(e, company));
+
       if (salary) filteredEmp = filteredEmp.filter(filters.salary[salary]);
+
       if (annual) filteredEmp = filteredEmp.filter(filters.annual[annual]);
 
       tableRef.value.setScrollTop(0);
       return filteredEmp;
     };
 
-    const companyChange = (company) => {
+    const onChange = ({ company = '', salary = '', annual = '' }) => {
+      [companyValue.value, salaryValue.value, annualValue.value] = [
+        company,
+        salary,
+        annual,
+      ];
       employee.value = filterEmployee(employeeClone.value, {
         company,
-      });
-    };
-
-    const salaryChange = (salary) => {
-      employee.value = filterEmployee(employeeClone.value, {
         salary,
-      });
-    };
-
-    const annualChange = (annual) => {
-      employee.value = filterEmployee(employeeClone.value, {
         annual,
       });
     };
@@ -77,14 +80,7 @@ const App = {
     const init = async () => {
       try {
         let res = await getEmployee();
-        companyOptions.value = [...new Set(res.map((e) => e.companyName))].map(
-          (e) => {
-            return {
-              value: e,
-              label: e,
-            };
-          }
-        );
+        companyOptions.value = getCompany(res);
         employee.value = res;
         employeeClone.value = structuredClone(res);
       } finally {
@@ -97,15 +93,13 @@ const App = {
       employee,
       companyValue,
       companyOptions,
-      companyChange,
       salaryValue,
       salaryOptions,
-      salaryChange,
       annualValue,
       annualOptions,
-      annualChange,
       loading,
       tableRef,
+      onChange,
     };
   },
 };

@@ -68,12 +68,12 @@
           </a>
         </div>
         <div
-          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
+          class="px-2 w-full flex items-center justify-center lg:p-0 lg:w-1/5 lg:justify-start"
         >
           <el-select
             class="w-full lg:w-5/6"
             v-model="companyValue"
-            @change="companyChange"
+            @change="(company) => onChange({company})"
             placeholder="select company"
             filterable
             clearable
@@ -87,12 +87,12 @@
           </el-select>
         </div>
         <div
-          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
+          class="px-2 w-full flex items-center justify-center lg:p-0 lg:w-1/5 lg:justify-start"
         >
           <el-select
             class="w-full lg:w-5/6"
             v-model="salaryValue"
-            @change="salaryChange"
+            @change="(salary)=>onChange({salary})"
             placeholder="select monthly salary"
             clearable
           >
@@ -105,12 +105,12 @@
           </el-select>
         </div>
         <div
-          class="p-2 w-full flex items-center justify-center lg:py-0 lg:w-1/5 lg:justify-start"
+          class="px-2 w-full flex items-center justify-center lg:p-0 lg:w-1/5 lg:justify-start"
         >
           <el-select
             class="w-full lg:w-5/6"
             v-model="annualValue"
-            @change="annualChange"
+            @change="(annual)=>onChange({annual})"
             placeholder="select annual salary"
             clearable
           >
@@ -136,11 +136,11 @@
         </div>
       </div>
 
-      <div class="h-[calc(100%-4rem)] hidden lg:block">
+      <div class="h-[calc(100%-15rem)] lg:h-[calc(100%-4rem)]">
         <el-table
+          class="w-full hidden lg:block"
           v-loading="loading"
           :data="employee"
-          style="width: 100%"
           border
           height="100%"
           ref="tableRef"
@@ -242,17 +242,16 @@
             width="360"
           ></el-table-column>
         </el-table>
-      </div>
 
-      <div class="h-[calc(100%-15rem)] block lg:hidden">
         <el-table
+          class="w-full lg:hidden"
           v-loading="loading"
           :data="employee"
-          style="width: 100%"
           border
           height="100%"
+          ref="tableRef"
         >
-          <el-table-column label="公司訊息 " align="center">
+          <el-table-column label="公司訊息" align="center">
             <template #default="scope">
               <div class="flex flex-wrap">
                 <div class="w-1/2">⬩任職公司:</div>
