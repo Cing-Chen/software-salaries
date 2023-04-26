@@ -1,23 +1,17 @@
 import { salaryOptions, annualOptions } from './model.js';
 
-const { ref } = Vue;
+const { ref, onMounted } = Vue;
 
 const base =
   window.location.hostname === 'zhong1016.github.io'
     ? 'https://raw.githubusercontent.com/zhong1016/software-salaries/master/api'
     : '../api';
 
-const getEmployee = async () => {
-  return fetch(`${base}/employee.json`).then((r) => r.json());
-};
+const onGet = async (api) => fetch(api).then((r) => r.json());
 
-const getEmployeeLazy = async () => {
-  return fetch(`${base}/employee_lazy.json`).then((r) => r.json());
-};
-
-const getCompany = async () => {
-  return fetch(`${base}/company.json`).then((r) => r.json());
-};
+const getEmployee = async () => onGet(`${base}/employee.json`);
+const getEmployeeLazy = async () => onGet(`${base}/employee_lazy.json`);
+const getCompany = async () => onGet(`${base}/company.json`);
 
 const filters = {
   company: (e, company) => e.companyName === company,
@@ -76,7 +70,7 @@ const App = {
       ];
 
       if (!employeeClone.value.length) {
-        employeeClone.value = JSON.parse(JSON.stringify(employee.value));
+        employeeClone.value = [...employee.value];
       }
 
       employee.value = filterEmployee(employeeClone.value, {
@@ -88,19 +82,20 @@ const App = {
 
     const init = async () => {
       try {
-        let res = await getEmployeeLazy();
-        employee.value = res;
         companyOptions.value = await getCompany();
-
-        setTimeout(async () => {
-          employee.value = await getEmployee();
-        }, 500);
+        employee.value = await getEmployeeLazy();
       } finally {
         loading.value = false;
       }
     };
 
     init();
+    onMounted(() => {
+      setTimeout(async () => {
+        let res = await getEmployee();
+        employee.value = res;
+      }, 1000);
+    });
     return {
       employee,
       companyValue,
