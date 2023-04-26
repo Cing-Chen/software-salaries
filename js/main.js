@@ -74,11 +74,14 @@ const App = {
         annual,
       ];
 
-      employee.value = filterEmployee(await getEmployee(), {
-        company,
-        salary,
-        annual,
-      });
+      employee.value = filterEmployee(
+        JSON.parse(JSON.stringify(employee.value)),
+        {
+          company,
+          salary,
+          annual,
+        }
+      );
     };
 
     const init = async () => {
