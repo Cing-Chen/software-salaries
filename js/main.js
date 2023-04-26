@@ -82,20 +82,24 @@ const App = {
 
     const init = async () => {
       try {
-        companyOptions.value = await getCompany();
+        let company = await getCompany();
+        companyOptions.value = company.map((e) => {
+          return { value: e, label: e };
+        });
         employee.value = await getEmployeeLazy();
       } finally {
         loading.value = false;
       }
     };
 
-    init();
     onMounted(() => {
       setTimeout(async () => {
         let res = await getEmployee();
         employee.value = res;
       }, 1000);
     });
+
+    init();
     return {
       employee,
       companyValue,
