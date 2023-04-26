@@ -42,6 +42,7 @@ const App = {
   setup() {
     const loading = ref(true);
     const employee = ref([]);
+    const employeeClone = ref([]);
     const companyOptions = ref([]);
     const companyValue = ref('');
     const salaryValue = ref('');
@@ -50,10 +51,10 @@ const App = {
     const tableRefMobile = ref(null);
 
     const filterEmployee = (
-      employeeClone,
+      emp,
       { company = '', salary = '', annual = '' }
     ) => {
-      let filteredEmp = employeeClone;
+      let filteredEmp = emp;
 
       if (company)
         filteredEmp = filteredEmp.filter((e) => filters.company(e, company));
@@ -74,14 +75,15 @@ const App = {
         annual,
       ];
 
-      employee.value = filterEmployee(
-        JSON.parse(JSON.stringify(employee.value)),
-        {
-          company,
-          salary,
-          annual,
-        }
-      );
+      if (!employeeClone.value.length) {
+        employeeClone.value = JSON.parse(JSON.stringify(employee.value));
+      }
+
+      employee.value = filterEmployee(employeeClone.value, {
+        company,
+        salary,
+        annual,
+      });
     };
 
     const init = async () => {
