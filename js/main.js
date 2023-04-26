@@ -2,19 +2,21 @@ import { salaryOptions, annualOptions } from './model.js';
 
 const { ref } = Vue;
 
+const base =
+  window.location.hostname === 'zhong1016.github.io'
+    ? 'https://raw.githubusercontent.com/zhong1016/software-salaries/master/api'
+    : '../api';
+
 const getEmployee = async () => {
-  return fetch('./employee.json').then((r) => r.json());
+  return fetch(`${base}/employee.json`).then((r) => r.json());
 };
 
-const getCompany = (res) => {
-  let list = [];
-  new Set(res.map((e) => e.companyName)).forEach((e) =>
-    list.push({
-      value: e,
-      label: e,
-    })
-  );
-  return list;
+const getEmployeeLazy = async () => {
+  return fetch(`${base}/employee_lazy.json`).then((r) => r.json());
+};
+
+const getCompany = async () => {
+  return fetch(`${base}/company.json`).then((r) => r.json());
 };
 
 const filters = {
@@ -40,7 +42,6 @@ const App = {
   setup() {
     const loading = ref(true);
     const employee = ref([]);
-    const employeeClone = ref([]);
     const companyOptions = ref([]);
     const companyValue = ref('');
     const salaryValue = ref('');
@@ -66,13 +67,14 @@ const App = {
       return filteredEmp;
     };
 
-    const onChange = ({ company = '', salary = '', annual = '' }) => {
+    const onChange = async ({ company = '', salary = '', annual = '' }) => {
       [companyValue.value, salaryValue.value, annualValue.value] = [
         company,
         salary,
         annual,
       ];
-      employee.value = filterEmployee(employeeClone.value, {
+
+      employee.value = filterEmployee(await getEmployee(), {
         company,
         salary,
         annual,
@@ -81,10 +83,13 @@ const App = {
 
     const init = async () => {
       try {
-        let res = await getEmployee();
-        companyOptions.value = getCompany(res);
+        let res = await getEmployeeLazy();
         employee.value = res;
-        employeeClone.value = structuredClone(res);
+        companyOptions.value = await getCompany();
+
+        setTimeout(async () => {
+          employee.value = await getEmployee();
+        }, 500);
       } finally {
         loading.value = false;
       }

@@ -24,12 +24,12 @@
 ### 目錄結構 ✨
 
 ```text
+- api                       # 分析表單資料後轉為 json
 - dcard                     # 資料來源 Dcard 匿名表單
 - images                    # icon
+- js                        # Vue3 js
 - README.md                 # 專案說明文檔
-- employee.json             # 分析表單資料後轉為 json
 - index.html                # HTML 模板文件
-- main.js                   # Vue3 js
 ```
 
 ### 免責聲明 ✨
