@@ -7,11 +7,11 @@ const base =
     ? 'https://raw.githubusercontent.com/zhong1016/software-salaries/master/api'
     : '../api';
 
-const onGet = async (api) => fetch(api).then((r) => r.json());
+const onGet = async (api) => fetch(base + api).then((r) => r.json());
 
-const getEmployee = async () => onGet(`${base}/employee.json`);
-const getEmployeeLazy = async () => onGet(`${base}/employee_lazy.json`);
-const getCompany = async () => onGet(`${base}/company.json`);
+const getEmployee = async () => onGet('/employee.json');
+const getEmployeeLazy = async () => onGet('/employee_lazy.json');
+const getCompany = async () => onGet('/company.json');
 
 const filters = {
   company: (e, company) => e.companyName === company,
