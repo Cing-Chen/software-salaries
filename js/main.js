@@ -96,6 +96,9 @@ const App = {
       setTimeout(async () => {
         let res = await getEmployee();
         employee.value = res;
+        // console.log(
+        //   JSON.stringify([...new Set(res.map((e) => e.companyName))])
+        // );
       }, 1000);
     });
 
