@@ -37,4 +37,11 @@ dcard.forEach((tr, index) => {
   });
   employeeList.push(JSON.parse(JSON.stringify(employee)));
 });
-console.log(JSON.stringify(employeeList));
+console.log(
+  JSON.stringify(
+    employeeList.map((e) => {
+      e.companyType = '';
+      return e;
+    })
+  )
+);
