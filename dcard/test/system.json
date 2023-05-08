@@ -5604,7 +5604,7 @@
     "position": "bios",
     "jobLevel": "工A",
     "relevantExperience": 1,
-    "currentTenure": "",
+    "currentTenure": 0.5,
     "monthlyBaseSalary": 5.25,
     "monthlyBonus": 0,
     "totalAnnualCompensation": 105,
